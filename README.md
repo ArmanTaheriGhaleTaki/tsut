@@ -5,9 +5,12 @@ twitter(x) space uploader to telegram channel
 
 - `ffmpeg` if not using portable binaries.
 - A logged in user's cookies file exported from Twitter in the [Netscape format](https://curl.se/docs/http-cookies.html).
+- telegram **bot toekn** and **CHAT_ID**
 
 
 ## Usage
+at first you need to add **bot toekn** and **CHAT_ID** into *.env* file 
+    
 for single space 
 ```bash
 tsut -i space_url -c COOKIE_FILE
