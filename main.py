@@ -8,11 +8,11 @@ import os
 @click.command()
 @click.option(
     "-i",
-    "--file",
-    "file",
+    "--link",
+    "link",
     type=click.Path(),
     multiple=True,
-    help="The file to open.",
+    help="The space link to download .",
 )
 @click.option(
     "-c",
@@ -26,9 +26,9 @@ import os
                         that prohibited guest user access to Twitter API
                         endpoints on 2023-07-01.""",
 )
-def hi(file,COOKIE_FILE):
+def hi(link,COOKIE_FILE):
 
-   download_audio(file[0],COOKIE_FILE[0])
+   download_audio(link[0],COOKIE_FILE[0])
    upload_to_telegram(bot_token, chat_id, ".")
         
 if __name__ == '__main__':
