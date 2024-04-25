@@ -1,14 +1,36 @@
+#!/usr/bin/env python
 from scripts.telegram_uploader import upload_to_telegram
 from scripts.twitter_space_downloader import download_audio
 from scripts.config import bot_token, chat_id
+import click
+import os 
 
+@click.command()
+@click.option(
+    "-i",
+    "--file",
+    "file",
+    type=click.Path(),
+    multiple=True,
+    help="The file to open.",
+)
+@click.option(
+    "-c",
+    "COOKIE_FILE",
+    type=click.Path(),
+    multiple=True,
+    help="""cookies file in the Netscape format. The specs of the
+                        Netscape cookies format can be found here:
+                        https://curl.se/docs/http-cookies.html. The cookies
+                        file is now required due to the Twitter API change
+                        that prohibited guest user access to Twitter API
+                        endpoints on 2023-07-01.""",
+)
+def hi(file,COOKIE_FILE):
 
-def main():
+   download_audio(file[0],COOKIE_FILE[0])
+   upload_to_telegram(bot_token, chat_id, ".")
+        
+if __name__ == '__main__':
+    hi()
 
-    download_audio(space_link, cookie_file)
-
-    upload_to_telegram(bot_token, chat_id, ".")
-
-
-if __name__ == "__main__":
-    main()

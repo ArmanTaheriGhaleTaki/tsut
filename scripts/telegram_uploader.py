@@ -1,14 +1,11 @@
 import os
 import subprocess
-from telegram import Bot
-
-
-
 def upload_to_telegram(bot_token, channel_id,directory):
-    message = "test"
-    telegram_bot = Bot(token=bot_token)
+    with open('output.txt', 'r') as desc:
+        message = desc.read()
     for file in os.listdir(directory):
-        if file.endswith('.m4a'):
+        if file.endswith('m4a'):
+           print(file)
            filepath = os.path.join(directory, file)
            subprocess.run(
               [
@@ -16,9 +13,9 @@ def upload_to_telegram(bot_token, channel_id,directory):
                "-s",
                "-X",
                "POST",
-               f"https://api.telegram.org/bot{BOT_TOKEN}/sendDocument",
+               f"https://api.telegram.org/bot{bot_token}/sendDocument",
                "-F",
-               f"chat_id={CHAT_ID}",
+               f"chat_id={channel_id}",
                "-F",
                f"document=@{file}",
                "-F",               
