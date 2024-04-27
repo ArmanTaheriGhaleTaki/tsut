@@ -26,5 +26,8 @@ setup(
         'console_scripts': [
             'tsut = tsut:run',
         ]
-    }
+    },
+    
+    long_description="Twitter space downloader.",
+    long_description_content_type="text/plain"
 )
