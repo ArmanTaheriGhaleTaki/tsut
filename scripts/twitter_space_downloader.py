@@ -1,5 +1,7 @@
 import subprocess
 import glob
+import ffmpeg
+import math
 import os
 
 def download_audio(space_link, cookie_file):
@@ -13,18 +15,45 @@ def download_audio(space_link, cookie_file):
             os.rename(i,newname)
             split_audio(newname)
 
-def split_audio(newname):
-    subprocess.run(
-        [
-            "ffmpeg",
-            "-i",
-            newname,
-            "-f",
-            "segment",
-            "-segment_time",
-            "3600",
-            "-c",
-            "copy",
-            f"{newname}_%01d.m4a",
-        ]
-    )
+def split_audio(newname): # Added python-native ffmpeg library instead of calling it using executable
+
+
+    probe = ffmpeg.probe(input_file)
+    video_info = next(s for s in probe['streams'] if s['codec_type'] == 'video')
+    duration = float(video_info['duration'])
+
+    # Calculate the number of segments
+    num_segments = math.ceil(duration / segment_length)
+
+    # Split the video
+    for i in range(num_segments):
+        start_time = i * segment_length
+        end_time = start_time + segment_length
+        output_file = f"{newname}_{str(i+1).zfill(3)}.m4a"
+
+        # Use ffmpeg-python to split the video
+        (
+            ffmpeg
+            .input(input_file)
+            .output(output_file, ss=start_time, t=segment_length, c='copy')
+            .run()
+        )
+
+
+#   subprocess.run(
+#       [
+
+
+
+            # "ffmpeg",
+            # "-i",
+            # newname,
+            # "-f",
+            # "segment",
+            # "-segment_time",
+            # "3600",
+            # "-c",
+            # "copy",
+            # f"{newname}_%01d.m4a",
+#      ]
+#   )
