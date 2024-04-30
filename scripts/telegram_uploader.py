@@ -10,8 +10,8 @@ def upload_to_telegram(bot_token, channel_id,directory):
         if file.endswith('m4a'):
             print(file)
             filepath = os.path.join(directory, file) # store the full path
-            with open(filepath, 'rb') as video_file: # open the file
-                bot.send_video(chat_id=channel_id, video=video_file, supports_streaming=True)
+            with open(filepath, 'rb') as audio_file: # open the file
+                bot.send_audio(chat_id=channel_id, audio=audio_file)
 
            # subprocess.run(
            #    [
