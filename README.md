@@ -13,11 +13,8 @@ at first you need to add **bot toekn** and **CHAT_ID** into *.env* file
     
 for single space 
 ```bash
-tsut -i space_url -c COOKIE_FILE
-```
-to read the links with spaces from a file like **spaces.txt**. 
-```bash
-tsut -f spaces.txt -c COOKIE_FILE
+tsut -i SPACE_LINK -c COOKIE_FILE -b BOT_TOKEN -C TELEGRAM_CHANNEL
+
 ```
 
 ## Features
