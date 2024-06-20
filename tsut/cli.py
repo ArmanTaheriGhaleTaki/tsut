@@ -1,4 +1,6 @@
 import argparse
+
+from tsut.utils import id_normalizer
 from .service import TSUT
 import sys
 import logging
@@ -53,10 +55,7 @@ async def perform():
         logging.error("Error: bot token has not been provided.")    
         sys.exit(1)
         
-    channel_id = args.channel_id
-    
-    if not channel_id.startswith('@'):
-        channel_id = '@' + channel_id
+    channel_id = id_normalizer(args.channel_id)
         
         
 
