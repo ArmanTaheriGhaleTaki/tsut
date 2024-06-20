@@ -1,9 +1,10 @@
 import argparse
-
-from tsut.utils import id_normalizer
-from .service import TSUT
-import sys
 import logging
+import sys
+
+from .service import TSUT
+from .utils import id_normalizer
+
 
 async def perform():
     parser = argparse.ArgumentParser()
@@ -30,42 +31,42 @@ async def perform():
         "--bot-token",
         help="Telegram bot token."
     )
-    
+
     parser.add_argument(
         "-C",
         "--channel-id",
         help="Telegram channel ID."
     )
-    
+
     args = parser.parse_args()
-    
+
     if args.link is None:
         logging.error("Error: space link has not been provided.")
         sys.exit(1)
-    
+
     if args.cookie_file is None:
         logging.error("Error: twitter cookie file has not been provided.")
         sys.exit(1)
-    
+
     if args.channel_id is None:
         logging.error("Error: channel id has not been provided.")
         sys.exit(1)
 
     if args.bot_token is None:
-        logging.error("Error: bot token has not been provided.")    
+        logging.error("Error: bot token has not been provided.")
         sys.exit(1)
-        
+
     channel_id = id_normalizer(args.channel_id)
-        
-        
 
     t = TSUT(args.bot_token, channel_id, args.link, args.cookie_file)
     await t.download_audio()
     await t.upload_to_telegram()
 
+
 def run():
     import asyncio
     asyncio.run(perform())
-    
+
+
 if __name__ == "__main__":
     run()
